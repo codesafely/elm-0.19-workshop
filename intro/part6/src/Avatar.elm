@@ -38,14 +38,13 @@ src (Avatar maybeUrl) =
             resolveAvatarUrl maybeUrl
 
 
-resolveAvatarUrl : Maybe String -> String
-resolveAvatarUrl maybeUrl =
-    {- 👉 TODO #1 of 2: return the user's avatar from maybeUrl, if maybeUrl actually
-       contains one. If maybeUrl is Nothing, return this URL instead:
 
-          https://static.productionready.io/images/smiley-cyrus.jpg
-    -}
-    ""
+-- Alternative solution: Use a case of expression
+
+
+resolveAvatarUrl : Maybe String -> String
+resolveAvatarUrl =
+    Maybe.withDefault "https://static.productionready.io/images/smiley-cyrus.jpg"
 
 
 encode : Avatar -> Value

@@ -3,7 +3,6 @@ module Main exposing (main)
 -- NOTE: Make sure to follow the instructions in the README for part3
 -- to install the elm/browser package before running elm make!
 --
--- FYI: 👇 You can see our new `Article` module in `src/Article.elm`
 
 import Article
 import Browser
@@ -36,7 +35,11 @@ update msg model =
                 { model | foo = bar }
 
     -}
-    model
+    if msg.description == "ClickedTag" then
+        { model | selectedTag = msg.data }
+
+    else
+        model
 
 
 
@@ -45,16 +48,8 @@ update msg model =
 
 view model =
     let
-        {- 👉 TODO: Filter the articles down to only the ones
-                    that include the currently selected tag.
-
-           💡 HINT: Replace `True` below with something involving
-                    `List.member`, `article.tags`, and `model.selectedTag`
-
-                    Docs for List.member: http://package.elm-lang.org/packages/elm-lang/core/latest/List#member
-        -}
         articles =
-            List.filter (\article -> True)
+            List.filter (\article -> List.member model.selectedTag article.tags)
                 model.allArticles
 
         feed =
@@ -104,17 +99,7 @@ viewTag selectedTagName tagName =
     in
     button
         [ class ("tag-pill " ++ otherClass)
-
-        {- 👉 TODO: Add an `onClick` handler which sends a msg
-                    that our `update` function above will use
-                    to set the currently selected tag to `tagName`.
-
-           💡 HINT: It should look something like this:
-
-                    , onClick { description = … , data = … }
-
-                    👆 Don't forget to add a comma before `onClick`!
-        -}
+        , onClick { description = "ClickedTag", data = tagName }
         ]
         [ text tagName ]
 
